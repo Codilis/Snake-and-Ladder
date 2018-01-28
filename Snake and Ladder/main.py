@@ -7,7 +7,7 @@ class BounceController(object):
         master.geometry("850x600")
         img = PhotoImage( file = "lenna.gif")
         name = ['n','s']
-        Display(master,img,name).animate(master)
+        Display(master,img,name)
         master.mainloop()
 
 def main():
