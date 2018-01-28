@@ -1,6 +1,7 @@
 import random
 from tkinter import *
 from Players import player
+from diceMove import dice
 
 class Match_Position(player):
     def __init__(self,name):
@@ -45,32 +46,42 @@ class Display(object):
         self.canvas.grid(padx=0, pady=0)
         self.canvas.create_image(360,300,anchor=CENTER, image = img)
         self.canvas.create_rectangle(810, 150, 760, 100, fill='white', outline='black')
-        self.animate(master)
 
+        def diceMove():
+            move = dice()
+            text = Label(self.canvas, text=str(move), background='white', font=("Helvetica", 25))
+            text.pack()
+            text.place(x=775, y=105)
+            
+        self.canvas.pack(fill=BOTH, expand=1)
+        diceRoll = Button(self.canvas, text="Roll", background='white', command = diceMove, font=("Helvetica"))
+        diceRoll.place(x=770, y=165)
+        
+##        self.animate(master)
 
     
-    def animate(self,master):
-        Button(master, text= "ROLL", command=self.say_hello(self.name[0])).grid( row=3, column=0, sticky=E)
-        Button(master, text= "ROLL", command=self.say_hello1(self.name[1])).grid( row=3, column=1, sticky=E)
+##    def animate(self,master):
+##        Button(master, text= "ROLL", command=self.say_hello(self.name[0])).grid( row=3, column=0, sticky=E)
+##        Button(master, text= "ROLL", command=self.say_hello1(self.name[1])).grid( row=3, column=1, sticky=E)
 
-    def say_hello(self,name):
-        self.name = name
-        self.name = Player(self.name)
-        self.name.spin()
-        Check.checkLadders(self.name)
-        Check.checkChutes(self.name)   
-        x = self.pos[0]
-        y = self.pos[1]
-        self.canvas.create_oval(x,y,x+20,y+20, fill='blue')
-
-    def say_hello1(self,name):
-        self.name = name
-        self.name = Player(self.name)
-        self.name.spin()
-        Check.checkLadders(self.name)
-        Check.checkChutes(self.name)   
-        x = self.pos[0]
-        y = self.pos[1]
-        self.canvas.create_oval(x,y,x+20,y+20, fill='red')
+##    def say_hello(self,name):
+##        self.name = name
+##        self.name = player(self.name)
+##        #self.name.spin()
+##        Check.checkLadders(self.name)
+##        Check.checkChutes(self.name)   
+##        x = self.pos[0]
+##        y = self.pos[1]
+##        self.canvas.create_oval(x,y,x+20,y+20, fill='blue')
+##
+##    def say_hello1(self,name):
+##        self.name = name
+##        self.name = player(self.name)
+##        #self.name.spin()
+##        Check.checkLadders(self.name)
+##        Check.checkChutes(self.name)   
+##        x = self.pos[0]
+##        y = self.pos[1]
+##        self.canvas.create_oval(x,y,x+20,y+20, fill='red')
 
 
