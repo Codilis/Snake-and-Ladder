@@ -67,6 +67,7 @@ class Display(object):
         self.canvas.pack(fill=BOTH, expand=1)
         self.diceRoll = Button(self.canvas, text="Roll", background='white', command = self.diceMove, font=("Helvetica"))
         self.diceRoll.place(x=770, y=165)
+        
 
 
     def diceMove(self):
@@ -103,12 +104,8 @@ class Display(object):
         else:
             self.m = 1
         print(self.x,self.y)
-        if(self.x==700, self.y==70):
+        if(self.x==700 and self.y==70):
             print("Won")
-            self.diceRoll(STATE=DISABLED)
+            self.diceRoll.place(x=-30, y=-30)
+            
         self.c = self.canvas.create_circle(self.x, self.y, 15, fill="#FFF", outline="")
-        
-
-        
-
-        
