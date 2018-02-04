@@ -53,6 +53,7 @@ class Display(object):
         self.i = 0
         self.block=[]
         self.move = 1
+        self.turn = 0
         #self.c = self.canvas.create_circle(self.x, self.y, 15, fill=color, outline="")
         
         #Drop Menu
@@ -95,7 +96,7 @@ class Display(object):
         move = dice()
         #move = 1
         self.x, self.y = position[0], position[1]
-
+        self.move = move
         self.block[turn] += move
         
         self.canvas.delete(self.player[turn])
@@ -109,7 +110,6 @@ class Display(object):
         
     def peices(self, move, turn):
         #Starting value of and x and y should be 120 and 120
-        #In create_circle initial value of x and y should be 100 and 550
         #To reach to the last block x should be 5*x and y should be 4*y
         #X should be added to value and Y should be subtracted
         # 5x120=600 and 4*120=480
@@ -159,11 +159,14 @@ class Display(object):
 
     def gamePlay(self):
         #player = self.num_player
-        turn = self.i%self.num_player
+        if(self.move == 6):
+            turn = self.turn
+        else:
+            turn = self.i%self.num_player
+            self.i += 1
+            self.turn = turn
         self.position[turn] = self.diceMove(self.position[turn], turn)
-        self.i += 1
-        #print("turn",turn,"position", self.position[turn],"block",self.block[turn])
         if(self.block[turn] == 30):
-            print("Won")
+            print("Won", turn)
             self.diceRoll.place(x=-30, y=-30)
  
