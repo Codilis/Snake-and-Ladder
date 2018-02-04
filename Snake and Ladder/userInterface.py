@@ -85,7 +85,7 @@ class Display(object):
             self.diceRoll.place(x=770, y=165)
             self.create_peice()
             #self.gamePlay()
-            #self.diceRoll.place(x=-30, y=-30)
+            self.startGame.place(x=-30, y=-30)
 
 
     def get_choice(self, value):
@@ -110,6 +110,7 @@ class Display(object):
         
     def peices(self, move, turn):
         #Starting value of and x and y should be 120 and 120
+        #In create_circle initial value of x and y should be 100 and 550
         #To reach to the last block x should be 5*x and y should be 4*y
         #X should be added to value and Y should be subtracted
         # 5x120=600 and 4*120=480
@@ -166,7 +167,17 @@ class Display(object):
             self.i += 1
             self.turn = turn
         self.position[turn] = self.diceMove(self.position[turn], turn)
-        if(self.block[turn] == 30):
-            print("Won", turn)
+        #print("turn",turn,"position", self.position[turn],"block",self.block[turn])
+        if(self.block[self.turn] >= 30):
             self.diceRoll.place(x=-30, y=-30)
+            print("Won", self.turn)
+            top = Toplevel()
+            top.title("Snake and Ladder")
+            message = "Player " + str(self.turn) + " Won" 
+            msg = Message(top, text=message)
+            top.geometry("%dx%d%+d%+d" % (100, 100, 250, 125))
+            msg.pack()
+            button = Button(top, text="Dismiss", command=top.destroy)
+            button.pack()
+            
  
