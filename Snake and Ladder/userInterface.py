@@ -138,6 +138,7 @@ class Display(object):
             if(self.y<30):
                 self.y=30
 
+            #Code for the Animation of piece
             self.canvas.delete(self.player[turn])
             self.player[turn] = self.canvas.create_circle(self.x, self.y, 15, fill=self.color[turn], outline=self.color[turn])
             self.canvas.update()
