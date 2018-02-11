@@ -1,6 +1,7 @@
 import random
 from tkinter import *
 from diceMove import dice
+import time
 
 def _create_circle(self, x, y, r, **kwargs):
     return self.create_oval(x-r, y-r, x+r, y+r, **kwargs)
@@ -114,9 +115,10 @@ class Display(object):
         #To reach to the last block x should be 5*x and y should be 4*y
         #X should be added to value and Y should be subtracted
         # 5x120=600 and 4*120=480
-        
+        #m is the constant that tells which side to move i.e. left to right or right to left
         for i in range(move,0,-1):
             self.x = self.x+120*self.m[turn]
+
             if(self.x>665 and turn < 3):
                 self.y = self.y - 120
                 self.x = 665
@@ -135,6 +137,13 @@ class Display(object):
                 self.m[turn] = 1 
             if(self.y<30):
                 self.y=30
+
+            self.canvas.delete(self.player[turn])
+            self.player[turn] = self.canvas.create_circle(self.x, self.y, 15, fill=self.color[turn], outline=self.color[turn])
+            self.canvas.update()
+            time.sleep(0.25)
+
+            
         print(self.x, self.y, self.block[turn])
         self.x, self.y, self.block[turn] = MatchPosition().find_snake_or_ladder(self.block[turn], turn, [self.x, self.y])
         
@@ -143,6 +152,7 @@ class Display(object):
         else:
             self.m[turn] = 1
         print(self.x,self.y, self.block[turn])
+        self.canvas.delete(self.player[turn])
         self.player[turn] = self.canvas.create_circle(self.x, self.y, 15, fill=self.color[turn], outline="")
 
 
@@ -170,14 +180,12 @@ class Display(object):
         #print("turn",turn,"position", self.position[turn],"block",self.block[turn])
         if(self.block[self.turn] >= 30):
             self.diceRoll.place(x=-30, y=-30)
-            print("Won", self.turn)
+            print("Won", self.turn+1)
             top = Toplevel()
             top.title("Snake and Ladder")
-            message = "Player " + str(self.turn) + " Won" 
+            message = "Player " + str(self.turn+1) + " Won" 
             msg = Message(top, text=message)
             top.geometry("%dx%d%+d%+d" % (100, 100, 250, 125))
             msg.pack()
             button = Button(top, text="Dismiss", command=top.destroy)
             button.pack()
-            
- 
