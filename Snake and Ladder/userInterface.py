@@ -38,9 +38,6 @@ class Display(object):
         canvas_width = 850
         canvas_height = 600
         self.color = ["#FFF", "#F00", "#0F0", "#00F", "#FF0", "#0FF"]
-        #print(self.color)
-        #self.pos = Match_Position(self.name).actualpos()
-        #print(self.pos)
         self.canvas = Canvas(master, width = canvas_width, height = canvas_height, bg = "brown")
         self.canvas.grid(padx=0, pady=0)
         self.canvas.create_image(360,300,anchor=CENTER, image = img)
@@ -55,7 +52,7 @@ class Display(object):
         self.block=[]
         self.move = 1
         self.turn = 0
-        #self.c = self.canvas.create_circle(self.x, self.y, 15, fill=color, outline="")
+        
         
         #Drop Menu
         OPTIONS = ["Players", "2", "3", "4", "5", "6"]
@@ -85,7 +82,6 @@ class Display(object):
             self.num_player = int(self.num_player)
             self.diceRoll.place(x=770, y=165)
             self.create_peice()
-            #self.gamePlay()
             self.startGame.place(x=-30, y=-30)
 
 
@@ -96,17 +92,23 @@ class Display(object):
     def diceMove(self, position, turn):
         move = dice()
         #move = 1
+        #Print Dice Value to screen
+        dice_value = Label(self.canvas, text=str(move),
+                           background='white', font=("Helvetica", 25))
+        dice_value.pack()
+        dice_value.place(x=775, y=105)
+        
+        
         self.x, self.y = position[0], position[1]
+        if(move+self.block[turn] > 30):
+            return [self.x, self.y]
+        
         self.move = move
         self.block[turn] += move
         
         self.canvas.delete(self.player[turn])
         self.peices(move, turn)
-        
-        dice_value = Label(self.canvas, text=str(move),
-                           background='white', font=("Helvetica", 25))
-        dice_value.pack()
-        dice_value.place(x=775, y=105)
+
         return [self.x, self.y]
         
     def peices(self, move, turn):
@@ -138,7 +140,7 @@ class Display(object):
             if(self.y<30):
                 self.y=30
 
-            #Code for the Animation of piece
+            # Code For the Animation of piece
             self.canvas.delete(self.player[turn])
             self.player[turn] = self.canvas.create_circle(self.x, self.y, 15, fill=self.color[turn], outline=self.color[turn])
             self.canvas.update()
@@ -170,7 +172,6 @@ class Display(object):
 
 
     def gamePlay(self):
-        #player = self.num_player
         if(self.move == 6):
             turn = self.turn
         else:
@@ -178,7 +179,6 @@ class Display(object):
             self.i += 1
             self.turn = turn
         self.position[turn] = self.diceMove(self.position[turn], turn)
-        #print("turn",turn,"position", self.position[turn],"block",self.block[turn])
         if(self.block[self.turn] >= 30):
             self.diceRoll.place(x=-30, y=-30)
             print("Won", self.turn+1)
@@ -190,3 +190,5 @@ class Display(object):
             msg.pack()
             button = Button(top, text="Dismiss", command=top.destroy)
             button.pack()
+            
+ 
